@@ -27,12 +27,13 @@ void main() {
 
   // Root tree
   final root = MaterialApp(
-    home: screen,
+    home: screen,S
     theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(255, 84, 3, 223),
         ),
         useMaterial3: false,
+      fontFamily: 'NotoSansKhmer'
     ),
     debugShowCheckedModeBanner: false,
   );

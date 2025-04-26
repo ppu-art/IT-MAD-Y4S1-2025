@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mad/screens/faculty_screen.dart';
 import 'package:mad/screens/home_screen.dart';
+import 'package:mad/screens/more_screen.dart';
+import 'package:mad/screens/news_screen.dart';
 
 class MainScreen extends StatefulWidget {
+
   const MainScreen({super.key});
 
   @override
@@ -14,9 +18,9 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> listScreen = [
     HomeScreen(),
-    HomeScreen(),
-    HomeScreen(),
-    HomeScreen()
+    FacultyScreen(),
+    NewsScreen(),
+    MoreScreen()
   ];
 
   @override
@@ -31,9 +35,9 @@ class _MainScreenState extends State<MainScreen> {
 
     final bottomNavBarItems = [
       BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home',),
-      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Faculty'),
-      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'News'),
-      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'More'),
+      BottomNavigationBarItem(icon: Icon(Icons.book_outlined), label: 'Faculty'),
+      BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'News'),
+      BottomNavigationBarItem(icon: Icon(Icons.more_vert), label: 'More'),
     ];
 
     return BottomNavigationBar(
@@ -42,6 +46,12 @@ class _MainScreenState extends State<MainScreen> {
         fixedColor: Colors.blueAccent,
         unselectedItemColor: Colors.black26,
         showUnselectedLabels: true,
+        onTap: (index){
+          print("Index : $index");
+          setState(() {
+            _currentIndex = index;
+          });
+        },
     );
 
   }

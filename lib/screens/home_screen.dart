@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mad/constant/app_color.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -10,6 +15,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
+  Future<void> loadText() async{
+    String dataString = await rootBundle.loadString('assets/data/sample.txt');
+    // dynamic data = jsonDecode(dataString);
+    print("Data  : $dataString");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadText();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,20 +60,23 @@ class _HomeScreenState extends State<HomeScreen> {
         _menu,
         _firstMenuTitle,
         _firstMenuList,
-        _firstMenuTitle,
-        _firstMenuList
+        _secondMenuTitle,
+        _secondMenuList
       ],
     );
   }
 
   Widget get _slider {
     return Image.asset('assets/images/slide.png',
-    // width: MediaQuery.of(context).size.width,
     fit: BoxFit.cover,);
   }
 
   Widget get _menu {
+
     List<String> dataMenu = ["Faculty","Student", "Subject","Teacher","Alumni"];
+
+    // Custom Icon Data
+    final iconData = SvgPicture.asset('assets/icons/education.svg', width: 50, height: 50,);
 
     final colMenu = dataMenu.map((i) {
       return Card(
@@ -62,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(8),
           child: Column(
             children: [
-              Icon(Icons.shopping_cart),
+              iconData,
               Text("$i")
             ],
           ),
@@ -74,7 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
       children: colMenu,
     );
 
-    return rowMenu;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: rowMenu,
+    );
   }
 
   Widget get _firstMenuTitle {
@@ -83,7 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("ស្ថាបត្យកម្ម និងការរចនា"),
+          Text("ស្ថាបត្យកម្ម និងការរចនា",
+          style: TextStyle(
+            fontFamily: 'NotoSansKhmer'
+          ),),
           Icon(Icons.navigate_next)
         ],
     ),);
@@ -91,9 +119,48 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget get _firstMenuList {
     List<String> firstMenuData = List.generate(10, (i) => "$i").toList();
+
     final image = Image.asset('assets/images/menu1.png');
 
-    final colMenu = firstMenuData.map((i){
+    final colMenu = firstMenuData.map((i) {
+      return Card(
+        elevation: 3,
+        child: image,
+      );
+    }).toList();
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: colMenu,
+      ),
+    );
+  }
+
+    Widget get _secondMenuTitle {
+      return Padding(
+        padding: EdgeInsets.only(right: 8, left: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("មហាវិទ្យាល័យព័ត៌មានវិទ្យា"),
+            Icon(Icons.navigate_next)
+          ],
+        ),
+      );
+  }
+
+  Widget get _secondMenuList {
+    List<String> firstMenuData = List.generate(10, (i) => "$i").toList();
+
+    final image = Image.network(
+      'https://ppua.edu.kh/wp-content/uploads/2024/08/smartmockups_lzw5btew-2-1482x635.jpg',
+      width: 150,
+      height: 150,
+      fit: BoxFit.cover,
+    );
+
+    final colMenu = firstMenuData.map((i) {
       return Card(
         elevation: 3,
         child: image,
